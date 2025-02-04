@@ -36,6 +36,9 @@ const hints = ref(true)
                     <v-list-item>
                         <v-switch v-model="hints" color="purple" label="Enable hints" hide-details></v-switch>
                     </v-list-item>
+                    <v-list-item>
+                      <v-btn title="log out"></v-btn>
+                    </v-list-item>
                 </v-list>
 
                 <!-- <v-card-actions>

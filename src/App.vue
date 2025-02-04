@@ -1,29 +1,25 @@
 <script setup lang="ts">
 import { ref } from "vue"
-import { useTheme } from "vuetify"
 import MenuPopover from "./components/MenuPopover.vue"
-const theme = useTheme()
-const drawer = ref(false)
-const mode = ref("light")
+import ThemeToggler from "./components/ThemeToggler.vue"
+const open = ref(false)
 const sidebarItems = ref([
     { title: "Home", icon: "mdi-home" },
     { title: "About", icon: "mdi-information" },
     { title: "Contact", icon: "mdi-email" }
 ])
-function toggleTheme() {
-    mode.value = mode.value === "light" ? "dark" : "light"
-    theme.global.name.value = mode.value
-    localStorage.setItem("THEME", mode.value)
+function toggleDrawer() {
+    open.value = !open.value
 }
 </script>
 
 <template>
     <v-app>
-        <v-navigation-drawer v-model="drawer">
+        <v-navigation-drawer v-model="open">
             <v-list>
                 <v-list-item>
                     <div style="display: flex; justify-content: space-between; align-items: center">
-                        <v-app-bar-nav-icon v-if="drawer" @click="drawer = !drawer"></v-app-bar-nav-icon>
+                        <v-app-bar-nav-icon v-if="open" @click="toggleDrawer"></v-app-bar-nav-icon>
                         <h4>DeepSeek UI</h4>
                     </div>
                 </v-list-item>
@@ -33,15 +29,10 @@ function toggleTheme() {
             </v-list>
         </v-navigation-drawer>
         <v-app-bar dense elevation="0">
-            <v-app-bar-nav-icon v-if="!drawer" @click="drawer = !drawer"></v-app-bar-nav-icon>
+            <v-app-bar-nav-icon v-if="!open" @click="toggleDrawer"></v-app-bar-nav-icon>
             <v-spacer></v-spacer>
-            <!-- <v-btn icon>
-                <v-icon>mdi-account</v-icon>
-            </v-btn> -->
-            <MenuPopover />
-            <v-btn icon @click="toggleTheme">
-                <v-icon>mdi-theme-light-dark</v-icon>
-            </v-btn>
+            <menu-popover />
+            <theme-toggler />
         </v-app-bar>
         <v-main>
             <v-container fluid>
